@@ -3,12 +3,31 @@
  */
 package Buscador_De_Imagenes;
 
+import Buscador_De_Imagenes.Service.Service;
+import Buscador_De_Imagenes.objects.Imagen;
+import java.io.FileNotFoundException;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class App {
-    public String getGreeting() {
+    public String getGreeting() throws ExecutionException, InterruptedException {
+        
+        conectarBaseDeDatos coneBaseDeDatos = new conectarBaseDeDatos();
+        try {
+            coneBaseDeDatos.conectar();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Service service = new Service();
+        Imagen imagen = new Imagen();
+        imagen.setRuta("TEST");
+        imagen.setUrl("TEST");
+         service.saveImagen(imagen);
         return "Hello World!";
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         System.out.println(new App().getGreeting());
     }
 }
